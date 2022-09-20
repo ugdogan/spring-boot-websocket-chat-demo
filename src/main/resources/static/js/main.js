@@ -11,6 +11,8 @@ var connectingElement = document.querySelector('.connecting');
 var stompClient = null;
 var username = null;
 
+var image = null;
+
 var colors = [
     '#2196F3', '#32c787', '#00BCD4', '#ff5652',
     '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
@@ -91,7 +93,7 @@ function onMessageReceived(payload) {
         messageElement.appendChild(avatarElement);
 
         var usernameElement = document.createElement('span');
-        var usernameText = document.createTextNode(message.sender);
+        var usernameText = document.createTextNode(message.sender + " " + message.time);
         usernameElement.appendChild(usernameText);
         messageElement.appendChild(usernameElement);
     }
@@ -115,6 +117,17 @@ function getAvatarColor(messageSender) {
 
     var index = Math.abs(hash % colors.length);
     return colors[index];
+}
+
+function importData() {
+    let input = document.createElement('input');
+    input.type = 'file';
+    input.onchange = _ => {
+        let files = Array.from(input.files);
+        console.log(files);
+    };
+
+    input.click();
 }
 
 usernameForm.addEventListener('submit', connect, true)
